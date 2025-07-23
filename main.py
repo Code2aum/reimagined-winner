@@ -57,5 +57,13 @@ def read_notes()->str:
     """Read all notes from the notes file."""
     ensure_notes_file_exists()
     with open(NOTES_FILE, 'r') as f:
+        notes = f.read().strip()
+    return notes or "No notes found."
+
+@mcp.resource("notes://latest")
+def get_latest_notes() -> str:
+    """Get the latest notes."""
+    ensure_notes_file_exists()
+    with open(NOTES_FILE, 'r') as f:
         notes = f.readlines()
-    return "Notes:\n" + "".join(notes) if notes else "No notes found."
+    return "Latest Notes:\n" + "".join(notes) if notes else "No notes found."
