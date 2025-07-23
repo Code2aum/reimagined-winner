@@ -7,10 +7,11 @@ cd to the `examples/snippets/clients` directory and run:
 
 from mcp.server.fastmcp import FastMCP
 import os
+from pathlib import Path
 
 # Create an MCP server
 mcp = FastMCP("AI Sticky Notes")
-NOTES_FILE="notes.txt"
+NOTES_FILE = str(Path.home() / "ai_sticky_notes.txt")
 
 def ensure_notes_file_exists():
     """Ensure the notes file exists."""
