@@ -51,3 +51,11 @@ def modify_note(old_note: str, new_note: str) -> str:
             else:
                 f.write(existing_note)
     return f"Note modified from '{old_note}' to '{new_note}'"
+
+@mcp.tool()
+def read_notes()->str:
+    """Read all notes from the notes file."""
+    ensure_notes_file_exists()
+    with open(NOTES_FILE, 'r') as f:
+        notes = f.readlines()
+    return "Notes:\n" + "".join(notes) if notes else "No notes found."
