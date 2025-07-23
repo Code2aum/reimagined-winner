@@ -6,33 +6,21 @@ cd to the `examples/snippets/clients` directory and run:
 """
 
 from mcp.server.fastmcp import FastMCP
+import os
 
 # Create an MCP server
-mcp = FastMCP("Demo")
+mcp = FastMCP("AI Sticky Notes")
+NOTES_FILE="notes.txt"
 
-
-# Add an addition tool
+def ensure_notes_file_exists():
+    """Ensure the notes file exists."""
+    if not os.path.exists(NOTES_FILE):
+        with open(NOTES_FILE, 'w') as f:
+            f.write("")
 @mcp.tool()
-def add(a: int, b: int) -> int:
-    """Add two numbers"""
-    return a + b
-
-
-# Add a dynamic greeting resource
-@mcp.resource("greeting://{name}")
-def get_greeting(name: str) -> str:
-    """Get a personalized greeting"""
-    return f"Hello, {name}!"
-
-
-# Add a prompt
-@mcp.prompt()
-def greet_user(name: str, style: str = "friendly") -> str:
-    """Generate a greeting prompt"""
-    styles = {
-        "friendly": "Please write a warm, friendly greeting",
-        "formal": "Please write a formal, professional greeting",
-        "casual": "Please write a casual, relaxed greeting",
-    }
-
-    return f"{styles.get(style, styles['friendly'])} for someone named {name}."
+def add_note(note: str)->str:
+    """Add a note to the notes file."""
+    ensure_notes_file_exists()
+    with open(NOTES_FILE, 'a') as f:
+        f.write(note + "\n")
+    return f"Note added: {note}"
